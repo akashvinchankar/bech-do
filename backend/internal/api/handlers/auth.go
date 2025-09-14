@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"bech-do-backend/internal/api/middleware"
 	"bech-do-backend/internal/models"
@@ -20,16 +21,16 @@ func NewAuthHandler() *AuthHandler {
 }
 
 type RegisterRequest struct {
-	Username    string `json:"username"`
-	Email       string `json:"email" binding:"required,email"`
-	Password    string `json:"password" binding:"required,min=6"`
-	FirstName   string `json:"firstName" binding:"required"`
-	LastName    string `json:"lastName" binding:"required"`
-	Phone       string `json:"phone"`
-	Address     string `json:"address"`
-	City        string `json:"city"`
-	State       string `json:"state"`
-	PinCode     string `json:"pin_code"`
+	Username  string `json:"username"`
+	Email     string `json:"email" binding:"required,email"`
+	Password  string `json:"password" binding:"required,min=6"`
+	FirstName string `json:"firstName" binding:"required"`
+	LastName  string `json:"lastName" binding:"required"`
+	Phone     string `json:"phone"`
+	Address   string `json:"address"`
+	City      string `json:"city"`
+	State     string `json:"state"`
+	PinCode   string `json:"pin_code"`
 }
 
 type LoginRequest struct {
@@ -82,7 +83,11 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	}
 
 	if err := repository.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		if strings.Contains(err.Error(), "duplicate key value") {
+			c.JSON(http.StatusConflict, gin.H{"error": "A user with this email or username already exists."})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user due to an unexpected error: " + err.Error()})
+		}
 		return
 	}
 
@@ -176,13 +181,13 @@ func (h *AuthHandler) UpdateProfile(c *gin.Context) {
 	}
 
 	var req struct {
-		FirstName   string `json:"firstName"`
-		LastName    string `json:"lastName"`
-		Phone       string `json:"phone"`
-		Address     string `json:"address"`
-		City        string `json:"city"`
-		State       string `json:"state"`
-		PinCode     string `json:"pin_code"`
+		FirstName string `json:"firstName"`
+		LastName  string `json:"lastName"`
+		Phone     string `json:"phone"`
+		Address   string `json:"address"`
+		City      string `json:"city"`
+		State     string `json:"state"`
+		PinCode   string `json:"pin_code"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {

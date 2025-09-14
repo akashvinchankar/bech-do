@@ -57,22 +57,17 @@ func InitDatabase() *gorm.DB {
 
 	log.Println("Successfully connected to Supabase PostgreSQL database")
 
-	// Skip auto-migration since tables already exist in Supabase
-	// You can enable this for fresh setups by uncommenting below:
-	/*
-		err = db.AutoMigrate(
-			&models.User{},
-			&models.Category{},
-			&models.Product{},
-			&models.Admin{},
-		)
-		if err != nil {
-			log.Fatal("Failed to migrate database:", err)
-		}
-		log.Println("Database migration completed successfully")
-	*/
-
-	log.Println("Using existing database schema")
+	// Auto-migrate database to match Go models
+	err = db.AutoMigrate(
+		&models.User{},
+		&models.Category{},
+		&models.Product{},
+		&models.Admin{},
+	)
+	if err != nil {
+		log.Fatal("Failed to migrate database:", err)
+	}
+	log.Println("Database migration completed successfully")
 
 	// Seed default data (will skip if already exists)
 	seedDefaultData(db)
@@ -103,18 +98,28 @@ func seedDefaultData(db *gorm.DB) {
 		}
 	}
 
-	// Create default admin user
-	var admin models.Admin
-	result := db.Where("email = ?", "admin@bechdo.com").First(&admin)
-	if result.Error != nil {
-		// Hash password (you should use proper password hashing in production)
-		defaultAdmin := models.Admin{
-			Email:    "admin@bechdo.com",
-			Password: "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password: password
-			Name:     "System Admin",
-			Role:     "admin",
-			IsActive: true,
+	// Create a demo user for frontend testing  
+	var demoUser models.User  
+	userResult := db.Where("email = ?", "admin@demo.com").First(&demoUser)
+	if userResult.Error != nil {
+		// Hash password: "password123" 
+		hashedPassword := "$2a$10$3asPVkbBdudW8OF/Hrlrce7RM6vf5J31vp0p5Ld.7rTANahcQmJ.C" // password123
+		defaultUser := models.User{
+			Email:       "admin@demo.com",
+			Password:    hashedPassword,
+			Username:    "admin",
+			FirstName:   "Admin",
+			LastName:    "Demo", 
+			PhoneNumber: "+91-9876543210",
+			Address:     "Demo Address",
+			City:        "Mumbai",
+			State:       "Maharashtra",
+			PinCode:     "400001",
+			IsVerified:  false,
+			IsActive:    true,
+			Role:        models.UserRoleUser,
 		}
-		db.Create(&defaultAdmin)
+		db.Create(&defaultUser)
+		log.Println("Created demo user: admin@demo.com / password123")
 	}
 }
