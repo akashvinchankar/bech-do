@@ -62,7 +62,11 @@ export interface ProductFilters {
 
 export interface ProductsResponse {
   products: Product[];
-  total: number;
-  page: number;
-  totalPages: number;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalCount: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
 }
