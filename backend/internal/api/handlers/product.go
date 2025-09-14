@@ -145,7 +145,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 		Find(&products)
 
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products: " + result.Error.Error()})
 		return
 	}
 
