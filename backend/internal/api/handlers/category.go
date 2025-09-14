@@ -17,9 +17,9 @@ func NewCategoryHandler() *CategoryHandler {
 
 func (h *CategoryHandler) GetCategories(c *gin.Context) {
 	var categories []models.Category
-	result := repository.DB.Where("is_active = ?", true).Find(&categories)
+	result := repository.DB.Find(&categories)
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories: " + result.Error.Error()})
 		return
 	}
 
