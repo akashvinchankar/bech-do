@@ -1,5 +1,7 @@
 package main
 
+// Updated: 2025-09-14 - API compatibility fixes for frontend integration
+
 import (
 	"log"
 	"net/http"
