@@ -8,8 +8,8 @@ import (
 
 type User struct {
 	ID        uint           `json:"id" gorm:"primaryKey"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
 	Email       string   `json:"email" gorm:"uniqueIndex;not null"`
@@ -39,14 +39,15 @@ const (
 
 type Category struct {
 	ID        uint           `json:"id" gorm:"primaryKey"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
 	Name        string `json:"name" gorm:"uniqueIndex;not null"`
+	Slug        string `json:"slug" gorm:"uniqueIndex"`
 	Description string `json:"description"`
 	Icon        string `json:"icon"`
-	IsActive    bool   `json:"is_active" gorm:"default:true"`
+	IsActive    bool   `json:"isActive" gorm:"default:true"`
 
 	// Relationships
 	Products []Product `json:"products,omitempty" gorm:"foreignKey:CategoryID"`
@@ -54,8 +55,8 @@ type Category struct {
 
 type Product struct {
 	ID        uint           `json:"id" gorm:"primaryKey"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
 	Title        string        `json:"title" gorm:"not null"`
@@ -67,14 +68,17 @@ type Product struct {
 	Location     string        `json:"location"`
 	IsNegotiable bool          `json:"is_negotiable" gorm:"default:false"`
 	Views        int           `json:"viewsCount" gorm:"default:0"`
+	IsSold       bool          `json:"isSold" gorm:"default:false"`
+	IsActive     bool          `json:"isActive" gorm:"default:true"`
+	SoldAt       *time.Time    `json:"soldAt,omitempty"`
 
 	// Foreign Keys
-	UserID     uint `json:"user_id" gorm:"not null"`
-	CategoryID uint `json:"category_id" gorm:"not null"`
+	UserID     uint `json:"userId" gorm:"not null"`
+	CategoryID uint `json:"categoryId" gorm:"not null"`
 
 	// Relationships
-	User     User     `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Category Category `json:"category" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	User     User     `json:"user,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Category Category `json:"category,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 type ProductStatus string

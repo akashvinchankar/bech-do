@@ -157,11 +157,11 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"products": products,
 		"pagination": gin.H{
-			"current_page": page,
-			"total_pages":  totalPages,
-			"total_count":  total,
-			"has_next":     hasNext,
-			"has_prev":     hasPrev,
+			"currentPage": page,
+			"totalPages":  totalPages,
+			"totalCount":  total,
+			"hasNext":     hasNext,
+			"hasPrev":     hasPrev,
 		},
 	})
 }
@@ -359,11 +359,11 @@ func (h *ProductHandler) GetMyProducts(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"products": products,
 		"pagination": gin.H{
-			"current_page": page,
-			"total_pages":  totalPages,
-			"total_count":  total,
-			"has_next":     hasNext,
-			"has_prev":     hasPrev,
+			"currentPage": page,
+			"totalPages":  totalPages,
+			"totalCount":  total,
+			"hasNext":     hasNext,
+			"hasPrev":     hasPrev,
 		},
 	})
 }
