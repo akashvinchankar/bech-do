@@ -14,9 +14,10 @@ type User struct {
 
 	Email       string   `json:"email" gorm:"uniqueIndex;not null"`
 	Password    string   `json:"-" gorm:"not null"`
-	FirstName   string   `json:"first_name" gorm:"not null"`
-	LastName    string   `json:"last_name" gorm:"not null"`
-	PhoneNumber string   `json:"phone_number"`
+	Username    string   `json:"username" gorm:"uniqueIndex"`
+	FirstName   string   `json:"firstName" gorm:"not null"`
+	LastName    string   `json:"lastName" gorm:"not null"`
+	PhoneNumber string   `json:"phone"`
 	Address     string   `json:"address"`
 	City        string   `json:"city"`
 	State       string   `json:"state"`
@@ -65,7 +66,7 @@ type Product struct {
 	Status       ProductStatus `json:"status" gorm:"default:'available'"`
 	Location     string        `json:"location"`
 	IsNegotiable bool          `json:"is_negotiable" gorm:"default:false"`
-	Views        int           `json:"views" gorm:"default:0"`
+	Views        int           `json:"viewsCount" gorm:"default:0"`
 
 	// Foreign Keys
 	UserID     uint `json:"user_id" gorm:"not null"`

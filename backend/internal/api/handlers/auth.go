@@ -20,11 +20,12 @@ func NewAuthHandler() *AuthHandler {
 }
 
 type RegisterRequest struct {
+	Username    string `json:"username"`
 	Email       string `json:"email" binding:"required,email"`
 	Password    string `json:"password" binding:"required,min=6"`
-	FirstName   string `json:"first_name" binding:"required"`
-	LastName    string `json:"last_name" binding:"required"`
-	PhoneNumber string `json:"phone_number"`
+	FirstName   string `json:"firstName" binding:"required"`
+	LastName    string `json:"lastName" binding:"required"`
+	Phone       string `json:"phone"`
 	Address     string `json:"address"`
 	City        string `json:"city"`
 	State       string `json:"state"`
@@ -67,9 +68,10 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	user := models.User{
 		Email:       req.Email,
 		Password:    string(hashedPassword),
+		Username:    req.Username,
 		FirstName:   req.FirstName,
 		LastName:    req.LastName,
-		PhoneNumber: req.PhoneNumber,
+		PhoneNumber: req.Phone,
 		Address:     req.Address,
 		City:        req.City,
 		State:       req.State,
@@ -174,9 +176,9 @@ func (h *AuthHandler) UpdateProfile(c *gin.Context) {
 	}
 
 	var req struct {
-		FirstName   string `json:"first_name"`
-		LastName    string `json:"last_name"`
-		PhoneNumber string `json:"phone_number"`
+		FirstName   string `json:"firstName"`
+		LastName    string `json:"lastName"`
+		Phone       string `json:"phone"`
 		Address     string `json:"address"`
 		City        string `json:"city"`
 		State       string `json:"state"`
@@ -192,7 +194,7 @@ func (h *AuthHandler) UpdateProfile(c *gin.Context) {
 	updates := map[string]interface{}{
 		"first_name":   req.FirstName,
 		"last_name":    req.LastName,
-		"phone_number": req.PhoneNumber,
+		"phone_number": req.Phone,
 		"address":      req.Address,
 		"city":         req.City,
 		"state":        req.State,
