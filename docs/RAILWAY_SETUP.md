@@ -31,12 +31,10 @@ In Railway project settings, add these environment variables:
 # Database (Use your existing Supabase connection)
 DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@[YOUR-PROJECT-REF].supabase.co:5432/postgres?sslmode=require
 
-# Supabase Configuration
-SUPABASE_URL=https://pqwnjvrmxjssfxuyrigz.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxd25qdnJteGpzc2Z4dXlyaWd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc4MzUxNjQsImV4cCI6MjA3MzQxMTE2NH0.p08DokOL-Grwiq0lkKP9dhcCMSm786SdkI_WWt9CdQE
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-
-# Security
+# Supabase Configuration  
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key# Security
 JWT_SECRET=your-super-secret-jwt-key-at-least-32-characters
 
 # Server Configuration  

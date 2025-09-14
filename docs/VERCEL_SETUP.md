@@ -28,8 +28,8 @@ NEXTAUTH_URL=https://bech-do.vercel.app
 NEXTAUTH_SECRET=your-32-char-secure-secret
 
 # Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://pqwnjvrmxjssfxuyrigz.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxd25qdnJteGpzc2Z4dXlyaWd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc4MzUxNjQsImV4cCI6MjA3MzQxMTE2NH0.p08DokOL-Grwiq0lkKP9dhcCMSm786SdkI_WWt9CdQE
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 ### 5. Deployment Steps
