@@ -17,10 +17,15 @@ func NewCategoryHandler() *CategoryHandler {
 
 func (h *CategoryHandler) GetCategories(c *gin.Context) {
 	var categories []models.Category
-	result := repository.DB.Find(&categories)
+	// Try with is_active filter first, fallback to all categories if field doesn't exist
+	result := repository.DB.Where("is_active = ? OR is_active IS NULL", true).Find(&categories)
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories: " + result.Error.Error()})
-		return
+		// If is_active column doesn't exist, try without the filter
+		result = repository.DB.Find(&categories)
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories: " + result.Error.Error()})
+			return
+		}
 	}
 
 	c.JSON(http.StatusOK, gin.H{"categories": categories})

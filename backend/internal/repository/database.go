@@ -57,35 +57,8 @@ func InitDatabase() *gorm.DB {
 
 	log.Println("Successfully connected to Supabase PostgreSQL database")
 
-	// Check if tables exist before running AutoMigrate
-	var tableExists bool
-	db.Raw("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'users')").Scan(&tableExists)
-	
-	if !tableExists {
-		// Auto-migrate database to match Go models (only if tables don't exist)
-		err = db.AutoMigrate(
-			&models.User{},
-			&models.Category{},
-			&models.Product{},
-			&models.Admin{},
-		)
-		if err != nil {
-			log.Fatal("Failed to migrate database:", err)
-		}
-		log.Println("Database migration completed successfully")
-	} else {
-		// Tables exist, just add missing columns if needed
-		log.Println("Tables already exist, checking for missing columns...")
-		
-		// Add missing columns manually if they don't exist
-		db.Exec("ALTER TABLE users ADD COLUMN IF NOT EXISTS username VARCHAR(100) UNIQUE")
-		db.Exec("ALTER TABLE categories ADD COLUMN IF NOT EXISTS slug VARCHAR(100) UNIQUE")
-		db.Exec("ALTER TABLE products ADD COLUMN IF NOT EXISTS is_sold BOOLEAN DEFAULT FALSE")
-		db.Exec("ALTER TABLE products ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE")
-		db.Exec("ALTER TABLE products ADD COLUMN IF NOT EXISTS sold_at TIMESTAMP WITH TIME ZONE")
-		
-		log.Println("Missing columns added successfully")
-	}
+	// Skip auto-migration for existing database
+	log.Println("Using existing database schema")
 
 	// Seed default data (will skip if already exists)
 	seedDefaultData(db)
