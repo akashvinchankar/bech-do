@@ -1,31 +1,141 @@
-# Bech-Do Marketplace 🛒
+# 🛒 Bech-Do Marketplace
 
-A modern, full-stack marketplace application built with Next.js 15 and Go, allowing users to buy and sell household items with ease.
+A modern, full-stack marketplace application built with Next.js and Go.
 
-![Bech-Do Logo](https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=300&fit=crop&crop=center)
+## ✨ Features
 
-## 🚀 Features
+- 🔐 **User Authentication** - Secure JWT-based auth
+- 🛍️ **Product Management** - Add, edit, browse products  
+- 🔍 **Advanced Search** - Filter by category, price, location
+- 📱 **Responsive Design** - Works on all devices
+- 🖼️ **Image Galleries** - Multiple product images
+- ⭐ **Reviews & Ratings** - User feedback system
+- 💬 **Real-time Chat** - Buyer-seller communication
 
-### For Buyers
-- **Browse Products**: Explore thousands of quality pre-owned items
-- **Smart Search**: Filter by category, price, condition, and location
-- **Product Details**: Comprehensive product pages with image galleries
-- **Seller Profiles**: View seller ratings and contact information
-- **Secure Communication**: Chat with sellers directly through the platform
+## 🏗️ Architecture
 
-### For Sellers
-- **Easy Listing**: Create product listings with multiple images
-- **Category Management**: Organize products across 8+ categories
-- **Price Management**: Set fixed or negotiable prices
-- **Inventory Tracking**: Monitor views and manage listings
-- **Dashboard**: Personal seller dashboard with analytics
+```
+bech-do/
+├── frontend/          # Next.js 15 + TypeScript
+├── backend/           # Go + Gin + GORM
+├── docs/             # Documentation
+└── README.md         # This file
+```
 
-### Platform Features
-- **User Authentication**: Secure JWT-based authentication
-- **Responsive Design**: Mobile-first, modern UI with Tailwind CSS
-- **Real-time Updates**: Live product status and availability
-- **Safety Features**: Built-in safety tips and secure transactions
-- **Admin Panel**: Complete admin control for platform management
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- Go 1.24+
+- PostgreSQL (or Supabase)
+
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/akashvinchankar/bech-do.git
+cd bech-do
+
+# Run setup script
+chmod +x setup.sh
+./setup.sh
+```
+
+### Development
+```bash
+# Start backend (terminal 1)
+cd backend
+go run cmd/server/main.go
+
+# Start frontend (terminal 2)  
+cd frontend
+npm run dev
+```
+
+## 🌐 Deployment
+
+### Frontend (Vercel)
+- **Live**: https://bech-do.vercel.app
+- Auto-deployed from `main` branch
+
+### Backend (Railway)
+- Free tier deployment ready
+- See `docs/RAILWAY_SETUP.md` for details
+
+## 🔧 Tech Stack
+
+### Frontend
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Shadcn/ui
+- **State**: Zustand
+- **Auth**: NextAuth.js
+
+### Backend  
+- **Language**: Go 1.24
+- **Framework**: Gin
+- **Database**: PostgreSQL (Supabase)
+- **ORM**: GORM
+- **Auth**: JWT
+
+## 📚 Documentation
+
+- [🚀 Setup Guide](docs/SETUP_GUIDE.md)
+- [📋 Project Plan](docs/PROJECT_PLAN.md)
+- [🚂 Railway Deployment](docs/RAILWAY_SETUP.md)
+- [⚡ Vercel Deployment](docs/VERCEL_SETUP.md)
+- [🤝 Contributing](CONTRIBUTING.md)
+
+## 🎯 API Endpoints
+
+```bash
+# Health Check
+GET /health
+
+# Authentication
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+
+# Products
+GET    /api/v1/products
+POST   /api/v1/products
+GET    /api/v1/products/:id
+PUT    /api/v1/products/:id
+DELETE /api/v1/products/:id
+
+# Categories
+GET /api/v1/categories
+```
+
+## 🛡️ Security
+
+- JWT-based authentication
+- CORS protection
+- Input validation
+- SQL injection prevention (GORM)
+- Password hashing (bcrypt)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file.
+
+## 🙏 Acknowledgments
+
+- Built with modern web technologies
+- UI components from Shadcn/ui
+- Database hosted on Supabase
+- Deployed on Vercel + Railway
+
+---
+
+**Live Demo**: [bech-do.vercel.app](https://bech-do.vercel.app)
 
 ## 🛠 Tech Stack
 
